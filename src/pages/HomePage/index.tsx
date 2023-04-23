@@ -6,17 +6,18 @@ import slide2 from "../../assets/il_slide_2.jpg";
 import slide3 from "../../assets/il_slide_3.jpg";
 import slide4 from "../../assets/il_slide_4.jpg";
 import slide5 from "../../assets/il_slide_5.jpg";
-import slide6 from "../../assets/il_slide_6.jpg";
-import slide7 from "../../assets/il_slide_7.jpg";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CustomEase, Linear } from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const HomePage = () => {
   const bannerImage1Ref = React.useRef<HTMLImageElement>(null);
   const bannerImage2Ref = React.useRef<HTMLImageElement>(null);
+  const titleRef = React.useRef<HTMLParagraphElement>(null);
+  const headerRef = React.useRef<HTMLDivElement>(null);
+  const bannerLabel1Ref = React.useRef<HTMLParagraphElement>(null);
+  const bannerLabel2Ref = React.useRef<HTMLParagraphElement>(null);
   const sectionTitle1Ref = React.useRef<HTMLParagraphElement>(null);
   const sectionDescription1Ref = React.useRef<HTMLParagraphElement>(null);
   const descriptionRef = React.useRef<HTMLParagraphElement>(null);
@@ -29,11 +30,74 @@ const HomePage = () => {
   const subStackRef = React.useRef<HTMLParagraphElement>(null);
 
   const slides = React.useMemo(
-    () => [slide1, slide2, slide3, slide4, slide5, slide6, slide7],
+    () => [slide1, slide2, slide3, slide4, slide5],
     []
   );
 
   React.useEffect(() => {
+    const timeline = gsap.timeline();
+
+    timeline
+      .fromTo(
+        headerRef.current,
+        {
+          opacity: 0,
+          translateY: -10,
+        },
+        {
+          opacity: 1,
+          translateY: 0,
+          delay: 0.4,
+        }
+      )
+      .fromTo(
+        titleRef.current,
+        {
+          opacity: 0,
+          translateY: 70,
+        },
+        {
+          opacity: 1,
+          translateY: 0,
+          delay: 0.5,
+        }
+      )
+      .fromTo(
+        bannerLabel1Ref.current,
+        {
+          opacity: 0,
+          translateY: 50,
+        },
+        {
+          opacity: 1,
+          translateY: 0,
+        }
+      )
+      .fromTo(
+        bannerLabel2Ref.current,
+        {
+          opacity: 0,
+          translateY: 50,
+        },
+        {
+          opacity: 1,
+          translateY: 0,
+          delay: -0.3,
+        }
+      )
+      .fromTo(
+        bannerImage1Ref.current,
+        {
+          opacity: 0,
+          translateY: "5%",
+        },
+        {
+          opacity: 1,
+          translateY: "0%",
+          delay: -0.3,
+        }
+      );
+
     gsap.fromTo(
       bannerImage1Ref.current,
       {
@@ -62,10 +126,9 @@ const HomePage = () => {
       {
         translateY: 0,
         opacity: 1,
-        ease: CustomEase.create("ease", ".14,.74,.71,.96"),
         scrollTrigger: {
           trigger: sectionTitle1Ref.current,
-          start: "top center",
+          start: "top 60%",
         },
       }
     );
@@ -79,14 +142,27 @@ const HomePage = () => {
       {
         translateY: 0,
         opacity: 1,
-        ease: CustomEase.create("ease", ".14,.74,.71,.96"),
         delay: 0.4,
         scrollTrigger: {
           trigger: sectionDescription1Ref.current,
-          start: "top center",
+          start: "top 60%",
         },
       }
     );
+
+    // gsap.fromTo(
+    //   slides1Ref.current,
+    //   {
+    //     translateX: 0,
+    //   },
+    //   {
+    //     translateX: "-100%",
+    //     opacity: 1,
+    //     ease: Linear.easeNone,
+    //     duration: slides.length * 0.8,
+    //     repeat: -1,
+    //   }
+    // );
 
     gsap.fromTo(
       slides1Ref.current,
@@ -95,10 +171,12 @@ const HomePage = () => {
       },
       {
         translateX: "-100%",
-        opacity: 1,
-        ease: Linear.easeNone,
-        duration: slides.length * 0.8,
-        repeat: -1,
+        scrollTrigger: {
+          trigger: sectionTitle1Ref.current,
+          start: "top center",
+          markers: true,
+          scrub: true,
+        },
       }
     );
 
@@ -111,8 +189,6 @@ const HomePage = () => {
       {
         translateY: 0,
         opacity: 1,
-        ease: CustomEase.create("ease", ".14,.74,.71,.96"),
-        delay: 0.4,
         scrollTrigger: {
           trigger: descriptionRef.current,
           start: "top center",
@@ -139,22 +215,13 @@ const HomePage = () => {
       }
     );
 
-    // const list = gsap.utils.toArray([
-    //   footerLabelRef.current,
-    //   currentlyUnavailableRef.current,
-    //   sayHelloRef.current,
-    //   dribbleRef.current,
-    //   twitterRef.current,
-    //   subStackRef.current,
-    // ]);
-
-    const timeline = gsap.timeline({
+    const footerTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: footerLabelRef.current,
       },
     });
 
-    timeline
+    footerTimeline
       .fromTo(
         footerLabelRef.current,
         {
@@ -164,7 +231,6 @@ const HomePage = () => {
         {
           translateY: 0,
           opacity: 1,
-          ease: CustomEase.create("ease", ".14,.74,.71,.96"),
         }
       )
       .fromTo(
@@ -176,7 +242,6 @@ const HomePage = () => {
         {
           translateY: 0,
           opacity: 1,
-          ease: CustomEase.create("ease", ".14,.74,.71,.96"),
         }
       )
       .fromTo(
@@ -188,7 +253,6 @@ const HomePage = () => {
         {
           translateY: 0,
           opacity: 1,
-          ease: CustomEase.create("ease", ".14,.74,.71,.96"),
         }
       )
       .fromTo(
@@ -200,7 +264,6 @@ const HomePage = () => {
         {
           translateY: 0,
           opacity: 1,
-          ease: CustomEase.create("ease", ".14,.74,.71,.96"),
         }
       )
       .fromTo(
@@ -212,7 +275,6 @@ const HomePage = () => {
         {
           translateY: 0,
           opacity: 1,
-          ease: CustomEase.create("ease", ".14,.74,.71,.96"),
         }
       )
       .fromTo(
@@ -224,41 +286,20 @@ const HomePage = () => {
         {
           translateY: 0,
           opacity: 1,
-          ease: CustomEase.create("ease", ".14,.74,.71,.96"),
         }
       );
-
-    // list.forEach((item: any, index) => {
-    //   gsap.fromTo(
-    //     item,
-    //     {
-    //       translateY: 50,
-    //       opacity: 0,
-    //     },
-    //     {
-    //       translateY: 0,
-    //       opacity: 1,
-    //       ease: CustomEase.create("ease", ".14,.74,.71,.96"),
-    //       delay: index * 0.2,
-    //       scrollTrigger: {
-    //         trigger: item,
-    //         start: "top center",
-    //       },
-    //     }
-    //   );
-    // });
   }, []);
 
   return (
     <div className={classes["container"]}>
-      <header className={classes["header"]}>
+      <header className={classes["header"]} ref={headerRef}>
         <button>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="#000"
-            width={44}
-            height={44}
+            fill="#fff"
+            width={38}
+            height={38}
           >
             <path
               fillRule="evenodd"
@@ -272,15 +313,18 @@ const HomePage = () => {
         </button>
       </header>
       <div className={classes["section"]}>
-        <p className={classes["title"]}>
+        <p className={classes["title"]} ref={titleRef}>
           Creative
           <br />
           Portfolio
         </p>
-        <p className={classes["label"]}>
+        <p ref={bannerLabel1Ref} className={classes["label"]}>
           This template is for professionals in the creative industry
         </p>
-        <p className={`${classes["label"]} ${classes["accent"]}`}>
+        <p
+          ref={bannerLabel2Ref}
+          className={`${classes["label"]} ${classes["accent"]}`}
+        >
           It offers a minimalistic layout that allows you to showcase your
           skills in a clear and concise manner.
         </p>
