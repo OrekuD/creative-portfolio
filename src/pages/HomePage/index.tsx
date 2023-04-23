@@ -174,7 +174,6 @@ const HomePage = () => {
         scrollTrigger: {
           trigger: sectionTitle1Ref.current,
           start: "top center",
-          markers: true,
           scrub: true,
         },
       }
